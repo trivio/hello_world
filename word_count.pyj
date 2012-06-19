@@ -1,0 +1,12 @@
+word_counts = rule('s3://aws-publicdatasets/common-crawl/crawl-002/', 'word_counts')
+
+@word_counts.map
+def map(record, params):
+  for word in record.payload.split():
+    yield word, 1
+
+@word_count.reduce
+def reduce(iter, params):
+  from disco.util import kvgroup
+  for word, counts in kvgroup(sorted(iter)):
+    yield word, sum(counts)
