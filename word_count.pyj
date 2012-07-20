@@ -5,7 +5,7 @@ word_counts = rule('s3://AKIAIOV23F6ZNL5YPRNA:8Gwz48zgzwoYIZv70V4uGDD6%2fdNtHdbF
 def map(record, params):
   for word in record.payload.split():
     word = word.decode('ascii')
-    if '\xff' in key or '\x00' in key: return
+    if '\xff' in word or '\x00' in word: return
     yield str(word.decode('ascii', 'ignore')), 1
 
 @word_counts.reduce
