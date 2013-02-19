@@ -5,8 +5,7 @@ word_counts.param('maxinput', 1)
 
 @word_counts.map
 def map(record, params):
-  print record
-  for word in record.payload.split():
+  for word in record['payload'].split():
     if '\xff' in word or '\x00' in word: return
     yield str(word.decode('ascii', 'ignore')), 1
 
