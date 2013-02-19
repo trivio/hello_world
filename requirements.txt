@@ -1,1 +1,0 @@
-git+https://github.com/trivio/trivio.datasources.git#egg=triv.io.datasources
