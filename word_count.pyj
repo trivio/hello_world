@@ -8,13 +8,19 @@ word_counts.param('maxinput', 1)
 #  for word in record['payload'].split():
 #    if '\xff' in word or '\x00' in word: return
 #    yield str(word.decode('ascii', 'ignore')), 1
-    
 
-import re    
-@word_counts.map
-def map(doc, params,  tokenizer = re.compile('[^A-Z0-9_.]+', flags=re.I)):
+
+@word_counts.map_reader
+def map_reader(doc, params):
+  import re
+  tokenizer = re.compile('[^A-Z0-9_.]+', flags=re.I)
+  
   for word in tokenizer.split(doc['payload']):
-    yield word, 1
+    yield word
+
+@word_counts.map
+def map(word, params):
+  yield word, 1
 
 @word_counts.reduce
 def reduce(iter, params):
