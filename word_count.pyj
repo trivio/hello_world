@@ -1,6 +1,8 @@
 word_counts = rule('s3://AKIAIOV23F6ZNL5YPRNA:8Gwz48zgzwoYIZv70V4uGDD6%2fdNtHdbFq4kLXGlR@aws-publicdatasets/common-crawl/crawl-002/', 
               'word_counts')
 
+word_counts.param('maxinput', 1)
+
 @word_counts.map
 def map(record, params):
   for word in record.payload.split():
