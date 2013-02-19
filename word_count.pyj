@@ -11,15 +11,17 @@ word_counts.param('maxinput', 1)
 
 
 @word_counts.map_reader
-def map_reader(doc, params):
+def map_reader(stream, size, url, params):
   import re
   tokenizer = re.compile('[^A-Z0-9_.]+', flags=re.I)
   
-  for word in tokenizer.split(doc['payload']):
-    yield word
+  for doc in stream:  
+    for word in tokenizer.split(doc['payload']):
+      yield url, word
 
 @word_counts.map
-def map(word, params):
+def map(doc, params):
+  url,word = doc
   yield word, 1
 
 @word_counts.reduce
