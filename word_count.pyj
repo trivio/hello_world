@@ -3,12 +3,6 @@ word_counts = rule('s3://AKIAIOV23F6ZNL5YPRNA:8Gwz48zgzwoYIZv70V4uGDD6%2fdNtHdbF
 
 word_counts.param('maxinput', 1)
 
-#@word_counts.map
-#def map(record, params):
-#  for word in record['payload'].split():
-#    if '\xff' in word or '\x00' in word: return
-#    yield str(word.decode('ascii', 'ignore')), 1
-
 
 @word_counts.map_reader
 def map_reader(stream, size, url, params):
