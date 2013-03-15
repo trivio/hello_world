@@ -15,6 +15,8 @@ def map(doc, params):
 
 @word_counts.reduce
 def reduce(iter, params):
-  from disco.util import kvgroup
-  for word, counts in kvgroup(sorted(iter)):
-    yield word, sum(counts)
+	counts = {}
+	for key, value in iter::
+		counts[key] = counts.get(key,0) + 1
+
+	return counts.iteritems()	
