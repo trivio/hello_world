@@ -6,8 +6,12 @@ word_counts.param('maxinput', 1)
 
 @word_counts.map
 def map(doc, params):
-  for word in doc['payload'].split(' '):
-    yield word, 1
+  for word in record['payload'].split():
+    # disco uses \xff and \x00 internally as field
+    # delimiters
+    if '\xff' in word or '\x00' in word: return
+    
+    yield str(word.decode('ascii', 'ignore')), 1
 
 @word_counts.reduce
 def reduce(iter, params):
