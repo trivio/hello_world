@@ -16,7 +16,7 @@ def map(doc, params):
 @word_counts.reduce
 def reduce(iter, params):
 	counts = {}
-	for key, value in iter::
+	for key, value in iter:
 		counts[key] = counts.get(key,0) + 1
 
 	return counts.iteritems()	
