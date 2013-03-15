@@ -11,7 +11,8 @@ def map_reader(stream, size, url, params):
   
   count = 0
   for doc in stream:
-    if count % 100 == 0: print doc['url']
+    cout += 1
+    if count % 100 == 0: print "%s:%s" % (doc['url'], count)
 
     for word in tokenizer.split(doc['payload']):
       yield url, word
