@@ -9,7 +9,10 @@ def map_reader(stream, size, url, params):
   import re
   tokenizer = re.compile('[^A-Z0-9_.]+', flags=re.I)
   
-  for doc in stream:  
+  count = 0
+  for doc in stream:
+    if count % 100 == 0: print doc['url']
+
     for word in tokenizer.split(doc['payload']):
       yield url, word
 
