@@ -4,23 +4,10 @@ word_counts = rule('s3://AKIAIOV23F6ZNL5YPRNA:8Gwz48zgzwoYIZv70V4uGDD6%2fdNtHdbF
 word_counts.param('maxinput', 1)
 
 
-@word_counts.map_reader
-def map_reader(stream, size, url, params):
-  import re
-  tokenizer = re.compile('[^A-Z0-9_.]+', flags=re.I)
-  
-  count = 0
-  for doc in stream:
-    count += 1
-    if count % 100 == 0: print "%s:%s" % (doc['url'], count)
-
-    for word in tokenizer.split(doc['payload']):
-      yield url, word
-
 @word_counts.map
 def map(doc, params):
-  url,word = doc
-  yield word, 1
+  for word in doc['payload'].split(' '):
+    yield word, 1
 
 @word_counts.reduce
 def reduce(iter, params):
