@@ -6,6 +6,7 @@ word_counts.param('maxinput', 1)
 
 @word_counts.map
 def map(doc, params):
+	print "===", doc
   for word in doc['payload'].split():
     # disco uses \xff and \x00 internally as field
     # delimiters
