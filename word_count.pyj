@@ -6,7 +6,7 @@ word_counts.param('maxinput', 1)
 
 @word_counts.map
 def map(doc, params):
-	print "===", doc
+  print "===", doc
   for word in doc['payload'].split():
     # disco uses \xff and \x00 internally as field
     # delimiters
@@ -16,8 +16,8 @@ def map(doc, params):
 
 @word_counts.reduce
 def reduce(iter, params):
-	counts = {}
-	for key, value in iter:
-		counts[key] = counts.get(key,0) + 1
+  counts = {}
+  for key, value in iter:
+    counts[key] = counts.get(key,0) + 1
 
-	return counts.iteritems()	
+  return counts.iteritems() 
